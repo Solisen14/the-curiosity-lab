@@ -20,17 +20,16 @@
 @media(max-width:800px){main{padding-top:78px}.section-heading{margin-top:92px}}
 @media(max-width:600px){.section-heading{margin-top:52px}}
 
-/* Original image used once as a mirrored, upward-sweeping hero illustration.
-   Its starting dot is the visual anchor where the former lab icon sat.
-   Keep the original labmark HTML available for a future restoration. */
-.collatz-arc{height:215px;position:relative;overflow:hidden;pointer-events:none;margin:0 auto -8px}
-.collatz-arc img{position:absolute;width:780px;max-width:none;height:auto;left:-28px;top:-465px;transform-origin:18% 93%;transform:scaleY(-1) rotate(52deg);mix-blend-mode:multiply;opacity:.82}
-.labmark{display:none}
-.intro{margin-top:0;justify-content:flex-start}
-.intro-heading{text-align:left;margin-left:190px}
-@media(min-width:801px){main{padding-top:8px}.section-heading{margin-top:78px}}
-@media(max-width:800px){main{padding-top:8px}.collatz-arc{height:185px}.collatz-arc img{width:650px;left:-24px;top:-388px}.intro-heading{margin-left:150px}.section-heading{margin-top:68px}}
-@media(max-width:600px){main{padding-top:6px}.collatz-arc{height:122px}.collatz-arc img{width:440px;left:-17px;top:-260px}.intro-heading{margin-left:0}.section-heading{margin-top:52px}}
+/* Original Collatz paths form one integrated brand mark, gently overlaying the title. */
+.collatz-arc{height:215px;position:relative;overflow:visible;pointer-events:none;margin:0 auto -75px;z-index:2}
+.collatz-arc img{position:absolute;width:780px;max-width:none;height:auto;left:42px;top:-420px;transform-origin:18% 93%;transform:scaleY(-1) rotate(48deg);mix-blend-mode:multiply;opacity:.66}
+.labmark{display:none} /* Retain original logo markup for future use. */
+.intro{position:relative;z-index:1;margin-top:0;justify-content:flex-start}
+.intro-heading{text-align:left;margin-left:110px}
+.section-heading,.grid{position:relative;z-index:3}
+@media(min-width:801px){main{padding-top:8px}.section-heading{margin-top:95px}}
+@media(max-width:800px){main{padding-top:8px}.collatz-arc{height:185px;margin-bottom:-60px}.collatz-arc img{width:650px;left:34px;top:-350px}.intro-heading{margin-left:95px}.section-heading{margin-top:85px}}
+@media(max-width:600px){main{padding-top:6px}.collatz-arc{height:122px;margin-bottom:-37px}.collatz-arc img{width:440px;left:13px;top:-233px;opacity:.55}.intro-heading{margin-left:0}.section-heading{margin-top:65px}}
 </style></head><body>
 <header><div class="wrap nav"><a class="brand" href="#top">The Curiosity Lab</a><span class="label">Explore • Experiment • Discover</span></div></header>
 <main id="top" class="wrap"><div class="collatz-arc" aria-hidden="true"><img src="collatz-angle-paths-2000-seeds%20%285%29.png" alt="" decoding="async"></div><div class="intro"><div class="labmark" aria-hidden="true"><svg viewBox="0 0 72 72" fill="none" stroke="white" stroke-width="5" stroke-linecap="round"><ellipse cx="36" cy="36" rx="15" ry="29" transform="rotate(45 36 36)"/><ellipse cx="36" cy="36" rx="15" ry="29" transform="rotate(-45 36 36)"/></svg></div><div class="intro-heading"><h1>The Curiosity Lab</h1><p>Explore. Experiment. Discover.</p></div></div>
