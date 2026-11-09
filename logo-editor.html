@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Curiosity Lab | Exact-Asset Logo Editor</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f0f3f8;color:#17253c;font-family:system-ui,Arial,sans-serif}
+header{background:#fff;padding:19px 24px;border-bottom:1px solid #e0e6ee}header h2{font-size:20px;margin:0 0 4px}header p{font-size:13px;color:#586981;margin:0}
+main{max-width:1000px;padding:24px;margin:auto}.panel{background:white;border:1px solid #dfe6ee;border-radius:15px;overflow:hidden}
+.stage{background:#f7f9fc;cursor:grab;touch-action:none;overflow:hidden;user-select:none;border-bottom:1px solid #dce4ec}
+.stage.grabbing{cursor:grabbing}.wrap{max-width:850px;margin:auto}
+.hero-logo{position:relative;isolation:isolate;width:min(100%,850px);margin:0 auto;container-type:inline-size}
+.collatz-arc{position:absolute;z-index:2;pointer-events:none;inset:0;transform:translate(2%,35px) rotate(4deg);transform-origin:left top}
+.collatz-arc img{display:block;width:102%;height:auto;opacity:.82}
+.hero-logo .intro{display:block;max-width:none;margin:0;padding:21% 0 0 8%}
+.intro-heading{min-width:0}
+.hero-logo h1{font-size:clamp(24px,10cqi,86px);line-height:1.04;letter-spacing:-.06em;font-weight:850;white-space:nowrap;margin:0 0 14px;color:#17253c}
+.title-front{position:relative;z-index:3}.title-behind{position:relative;z-index:1;color:#17253c}
+.hero-logo p{position:relative;z-index:3;font-size:clamp(15px,2.6cqi,25px);line-height:1.3;letter-spacing:.005em;color:#566a82;margin:0;padding-top:5%}
+.hero-logo .intro{padding-bottom:24%}
+.stage-caption{font-size:12px;text-align:center;color:#687992;padding:10px}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:16px;padding:20px}
+.control label{display:flex;justify-content:space-between;align-items:center;font-weight:650;font-size:13px}.control output{font-weight:400;color:#5c7089;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;margin-top:12px;accent-color:#245b79}.flips{display:flex;gap:20px;flex-wrap:wrap;padding:0 20px 20px}.flips label{display:flex;gap:8px;align-items:center;font-size:13px;font-weight:650}
+.buttons{border-top:1px solid #e2e7ec;padding:17px 20px;display:flex;gap:10px;flex-wrap:wrap}button{background:white;color:#17253c;border:1px solid #c4d0dd;border-radius:8px;padding:10px 13px;font-weight:650;cursor:pointer}button.primary{background:#17253c;color:white}pre{white-space:pre-wrap;background:#f4f7fb;border-radius:8px;margin:0 20px 20px;padding:16px;color:#233651;font-size:13px;overflow-wrap:anywhere}.small{color:#566a82;font-size:12px;margin:0 20px 20px}
+@media(max-width:600px){.hero-logo h1{margin-bottom:8px}.hero-logo p{padding-top:7%;font-size:clamp(14px,4cqi,17px)}.controls{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style></head>
+<body><header><h2>The Curiosity Lab | Logo Positioning</h2><p>This editor uses the exact <code>collatz-hero-v1.webp</code> and title layout from your website. It does not save or publish edits.</p></header>
+<main><div class="panel">
+<div class="stage" id="stage"><div class="wrap"><div class="hero-logo" id="hero">
+<div class="collatz-arc" id="arc" aria-hidden="true"><img id="art" src="collatz-hero-v1.webp" alt="" width="1053" height="395"></div>
+<div class="intro"><div class="intro-heading"><h1><span class="title-front">The Curiosity </span><span class="title-behind">Lab</span></h1><p>Explore. Experiment. Discover.</p></div></div>
+</div></div></div><div class="stage-caption">Drag on the preview to reposition the artwork, then refine with the controls.</div>
+<div class="controls">
+<div class="control"><label for="x">Horizontal <output id="xv"></output></label><input id="x" type="range" min="-80" max="120" step=".1"></div>
+<div class="control"><label for="y">Vertical <output id="yv"></output></label><input id="y" type="range" min="-300" max="800" step="1"></div>
+<div class="control"><label for="angle">Rotation <output id="anglev"></output></label><input id="angle" type="range" min="-90" max="90" step=".5"></div>
+<div class="control"><label for="size">Image width <output id="sizev"></output></label><input id="size" type="range" min="30" max="200" step="1"></div>
+<div class="control"><label for="opacity">Opacity <output id="opacityv"></output></label><input id="opacity" type="range" min="0" max="100" step="1"></div>
+</div>
+<div class="flips"><label><input id="flipH" type="checkbox"> Mirror horizontally (y-axis)</label><label><input id="flipV" type="checkbox"> Mirror vertically (x-axis)</label></div>
+<div class="buttons"><button id="reset">Reset to website settings</button><button class="primary" id="copy">Copy CSS</button><span id="status" role="status" style="font-size:13px;color:#24617c;align-self:center"></span></div>
+<pre id="css" aria-label="Generated CSS"></pre>
+<p class="small">The editor is deliberately unlinked from the main navigation. It matches the desktop title and artwork CSS. Your main website's mobile-only overrides still require separate evaluation.</p>
+</div></main>
+<script>
+const defaults={x:2,y:35,angle:4,size:102,opacity:82,flipH:false,flipV:false};
+let s={...defaults};
+const $=id=>document.getElementById(id);
+function transform(){return 'translate('+s.x+'%, '+s.y+'px) rotate('+s.angle+'deg) scale('+(s.flipH?-1:1)+', '+(s.flipV?-1:1)+')'}
+function update(){
+ $('arc').style.transform=transform();$('art').style.width=s.size+'%';$('art').style.opacity=s.opacity/100;
+ for(const k of ['x','y','angle','size','opacity']){$(k).value=s[k];$(k+'v').textContent=s[k]+({x:'%',y:'px',angle:'°',size:'%',opacity:'%'}[k])}
+ $('flipH').checked=s.flipH;$('flipV').checked=s.flipV;
+ $('css').textContent='.collatz-arc {\n  transform: '+transform()+';\n}\n.collatz-arc img {\n  width: '+s.size+'%;\n  opacity: '+(s.opacity/100).toFixed(2)+';\n}';
+}
+for(const k of ['x','y','angle','size','opacity']) $(k).addEventListener('input',e=>{s[k]=Number(e.target.value);update()});
+for(const k of ['flipH','flipV']) $(k).addEventListener('change',e=>{s[k]=e.target.checked;update()});
+$('reset').onclick=()=>{s={...defaults};update()};
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText($('css').textContent);$('status').textContent='Copied!'}catch{$('status').textContent='Select the CSS below and copy it'}};
+let drag=null;const stage=$('stage');
+stage.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;drag={px:e.clientX,py:e.clientY,x:s.x,y:s.y,id:e.pointerId,w:$('hero').getBoundingClientRect().width};stage.setPointerCapture(e.pointerId);stage.classList.add('grabbing')});
+stage.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;s.x=Math.round((drag.x+(e.clientX-drag.px)*100/drag.w)*10)/10;s.y=Math.round(drag.y+e.clientY-drag.py);update()});
+function end(){drag=null;stage.classList.remove('grabbing')}stage.addEventListener('pointerup',end);stage.addEventListener('pointercancel',end);
+update();
+</script></body></html>
