@@ -20,21 +20,21 @@
 @media(max-width:800px){main{padding-top:78px}.section-heading{margin-top:92px}}
 @media(max-width:600px){.section-heading{margin-top:52px}}
 
-/* Collatz brand composition. Use multiply to make white pixels disappear without SVG filtering. */
-.hero-logo{position:relative;min-height:255px;padding-top:128px;margin-left:64px;background:#f7f9fc;isolation:isolate}
+/* Collatz identity: original paths with white made genuinely transparent at load. */
+.hero-logo{position:relative;min-height:255px;padding-top:128px;isolation:isolate}
 .hero-logo .collatz-arc{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:visible}
-.hero-logo .collatz-arc img{position:absolute;width:780px;max-width:none;height:auto;left:-160px;top:-459px;transform-origin:18% 93%;transform:scaleY(-1) rotate(58deg);mix-blend-mode:darken;opacity:1}
-.labmark{display:none} /* Existing icon markup preserved for later. */
+.hero-logo .collatz-arc img{position:absolute;width:780px;max-width:none;height:auto;left:-6px;top:-459px;transform-origin:18% 93%;transform:scaleY(-1) rotate(58deg);opacity:.90}
+.labmark{display:none} /* Original teal lab icon retained in HTML. */
 .hero-logo .intro{position:relative;z-index:auto;justify-content:flex-start;margin:0}
-.hero-logo .intro-heading{margin-left:110px;text-align:left}
+.hero-logo .intro-heading{margin-left:174px;text-align:left}
 .hero-logo .intro h1{position:relative;isolation:auto}
-.hero-logo .title-front{position:relative;z-index:3}
-.hero-logo .title-behind{position:relative;z-index:3;color:#17253c}
+.hero-logo .title-front{position:relative;z-index:3;color:#17253c}
+.hero-logo .title-behind{position:relative;z-index:1;color:#17253c}
 .hero-logo .intro p{position:relative;z-index:3}
 .section-heading,.grid{position:relative;z-index:4}
 @media(min-width:801px){main{padding-top:8px}.section-heading{margin-top:72px}}
-@media(max-width:800px){main{padding-top:8px}.hero-logo{min-height:225px;padding-top:111px;margin-left:48px}.hero-logo .collatz-arc img{width:650px;left:-138px;top:-383px}.hero-logo .intro-heading{margin-left:85px}.section-heading{margin-top:65px}}
-@media(max-width:600px){main{padding-top:8px}.hero-logo{min-height:155px;padding-top:79px;margin-left:14px}.hero-logo .collatz-arc img{width:440px;left:-76px;top:-261px;opacity:1}.hero-logo .intro-heading{margin-left:25px}.section-heading{margin-top:52px}}
+@media(max-width:800px){main{padding-top:8px}.hero-logo{min-height:225px;padding-top:111px}.hero-logo .collatz-arc img{width:650px;left:0px;top:-383px}.hero-logo .intro-heading{margin-left:133px}.section-heading{margin-top:65px}}
+@media(max-width:600px){main{padding-top:8px}.hero-logo{min-height:155px;padding-top:79px}.hero-logo .collatz-arc img{width:440px;left:25px;top:-261px;opacity:.85}.hero-logo .intro-heading{margin-left:39px}.section-heading{margin-top:52px}}
 </style></head><body>
 <header><div class="wrap nav"><a class="brand" href="#top">The Curiosity Lab</a><span class="label">Explore • Experiment • Discover</span></div></header>
 <main id="top" class="wrap"><div class="hero-logo"><div class="collatz-arc" aria-hidden="true"><img src="collatz-angle-paths-2000-seeds%20%285%29.png?v=hero-20261109b" alt="" decoding="async"></div><div class="intro"><div class="labmark" aria-hidden="true"><svg viewBox="0 0 72 72" fill="none" stroke="white" stroke-width="5" stroke-linecap="round"><ellipse cx="36" cy="36" rx="15" ry="29" transform="rotate(45 36 36)"/><ellipse cx="36" cy="36" rx="15" ry="29" transform="rotate(-45 36 36)"/></svg></div><div class="intro-heading"><h1><span class="title-front">The Curiosity </span><span class="title-behind">Lab</span></h1><p>Explore. Experiment. Discover.</p></div></div></div>
@@ -43,4 +43,36 @@
 <a class="tile" href="https://solisen14.github.io/First-Ace/"><div class="iconbox a"><span class="letter">A</span><svg class="accent" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 3C11 10 5 12 5 17a6 6 0 0 0 10 3 6 6 0 0 0 10-3C25 12 19 10 15 3ZM12 25h6m-3-6v6"/></svg></div><h3>First Ace</h3><p>Shuffle, simulate, and uncover the connections between experimental and theoretical probability.</p><span class="arrow">Explore resource ↗</span></a>
 <a class="tile" href="https://solisen14.github.io/collatz-laboratory/"><div class="iconbox c"><span class="letter">C</span><svg class="accent lower" viewBox="0 0 30 30" aria-hidden="true"><path d="M11 3h8M13 3v9l-8 12a3 3 0 0 0 2.5 4h15a3 3 0 0 0 2.5-4l-8-12V3M9 20h12"/></svg></div><h3>Collatz Laboratory</h3><p>Follow simple rules into surprising patterns, open questions, and mathematical discovery.</p><span class="arrow">Explore resource ↗</span></a>
 <a class="tile" href="https://solisen14.github.io/morphology-madness/"><div class="iconbox m"><span class="letter">M</span><svg class="accent" viewBox="0 0 30 30" aria-hidden="true"><path d="m15 2 2.7 9.3L27 14l-9.3 3L15 27l-3-10-9-3 9-2.7z"/></svg></div><h3>Morphology Madness</h3><p>Play with words, unpack meaning, and discover the building blocks of language.</p><span class="arrow">Explore resource ↗</span></a>
-</div></main><footer class="foot"><div class="wrap">The Curiosity Lab · Explore. Experiment. Discover.</div></footer></body></html>
+</div></main><footer class="foot"><div class="wrap">The Curiosity Lab · Explore. Experiment. Discover.</div></footer><script>
+/* Convert the uploaded grayscale Collatz PNG to transparent linework.
+   No image regeneration or white CSS/SVG mask boxes. */
+(function () {
+  const img = document.querySelector('.collatz-arc img');
+  if (!img) return;
+  function stripWhite() {
+    if (!img.naturalWidth || img.dataset.transparent === 'yes') return;
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      const ctx = canvas.getContext('2d', {willReadFrequently:true});
+      ctx.drawImage(img, 0, 0);
+      const pixels = ctx.getImageData(0,0,canvas.width,canvas.height);
+      const p = pixels.data;
+      for(let i=0;i<p.length;i+=4){
+        const darkness = 255 - Math.min(p[i],p[i+1],p[i+2]);
+        p[i]=37; p[i+1]=47; p[i+2]=64;
+        p[i+3]=Math.round((p[i+3]/255)*Math.min(255,darkness*1.12));
+      }
+      ctx.putImageData(pixels,0,0);
+      img.dataset.transparent='yes';
+      img.src=canvas.toDataURL('image/png');
+    } catch(err) {
+      /* If conversion fails, keep the source image visible, with no geometric filter. */
+      console.warn('Collatz transparency conversion skipped',err);
+    }
+  }
+  if(img.complete) stripWhite();
+  else img.addEventListener('load',stripWhite,{once:true});
+})();
+</script></body></html>
